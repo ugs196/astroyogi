@@ -1,7 +1,7 @@
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
-    ApplicationBuilder, CommandHandler, CallbackQueryHandler,
+    Application, CommandHandler, CallbackQueryHandler,
     ContextTypes
 )
 from datetime import datetime, date
@@ -78,7 +78,7 @@ async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 # Run the bot
 if __name__ == "__main__":
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("tithi", tithi))
