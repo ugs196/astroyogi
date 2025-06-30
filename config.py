@@ -1,0 +1,6 @@
+# config.py
+import os
+
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+PROKERALA_CLIENT_ID = os.getenv("PROKERALA_CLIENT_ID")
+PROKERALA_CLIENT_SECRET = os.getenv("PROKERALA_CLIENT_SECRET")
