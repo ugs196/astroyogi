@@ -4,9 +4,10 @@ print("🐍 Telegram version:", telegram.__version__)  # Debug version info
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
-    ApplicationBuilder, CommandHandler, CallbackQueryHandler,
+    Application, ApplicationBuilder, CommandHandler, CallbackQueryHandler,
     ContextTypes
 )
+
 from datetime import datetime, date
 from panchang import fetch_panchang_data
 from horoscope import fetch_horoscope
