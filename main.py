@@ -1,7 +1,10 @@
 import logging
+import telegram
+print("🐍 Telegram version:", telegram.__version__)  # Debug version info
+
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
-    Application, CommandHandler, CallbackQueryHandler,
+    ApplicationBuilder, CommandHandler, CallbackQueryHandler,
     ContextTypes
 )
 from datetime import datetime, date
