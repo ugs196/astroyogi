@@ -1,13 +1,13 @@
 import logging
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
-    Application, CommandHandler, CallbackQueryHandler,
+    ApplicationBuilder, CommandHandler, CallbackQueryHandler,
     ContextTypes
 )
 from datetime import datetime, date
 from panchang import fetch_panchang_data
 from horoscope import fetch_horoscope
-from config import BOT_TOKEN
+from config import BOT_TOKEN  # Or use os.environ.get("BOT_TOKEN") for Render
 
 logging.basicConfig(level=logging.INFO)
 
@@ -26,7 +26,7 @@ async def tithi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     result = fetch_panchang_data(today)
     await update.message.reply_text(f"📆 Today’s Panchang:\n{result}")
 
-# /birthdata or /marriage with custom date
+# /birthdata or /marriage
 async def custom_panchang(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
         dob = context.args[0]
@@ -53,8 +53,7 @@ async def custom_panchang(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode="Markdown"
         )
 
-
-# /horoscope command with buttons
+# /horoscope buttons
 async def horoscope(update: Update, context: ContextTypes.DEFAULT_TYPE):
     zodiac_buttons = [
         ["♈ Aries", "♉ Taurus", "♊ Gemini"],
@@ -69,17 +68,17 @@ async def horoscope(update: Update, context: ContextTypes.DEFAULT_TYPE):
     markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("🌟 Select your Zodiac Sign:", reply_markup=markup)
 
-# Handle zodiac button click
+# Zodiac sign handler
 async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
-    sign = query.data  # e.g., "leo"
+    sign = query.data
     result = fetch_horoscope(sign)
     await query.edit_message_text(text=result, parse_mode="Markdown")
 
-# Run the bot
+# Main bot execution
 if __name__ == "__main__":
-    application = Application.builder().token(BOT_TOKEN).build()
+    application = ApplicationBuilder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("tithi", tithi))
@@ -90,4 +89,3 @@ if __name__ == "__main__":
 
     print("🤖 Bot is running...")
     application.run_polling()
-
