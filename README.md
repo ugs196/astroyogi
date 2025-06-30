@@ -57,8 +57,6 @@
   </a>
 </p>
 <h2>📈 GitHub Stats</h2>
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=ugs196&show_icons=true&theme=radical" alt="ugs196's GitHub Stats" />
   <br>
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=ugs196&theme=radical" alt="ugs196's GitHub Streak" />
 </p>
