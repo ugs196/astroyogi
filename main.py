@@ -1,13 +1,9 @@
 import logging
-import telegram
-print("🐍 Telegram version:", telegram.__version__)  # Debug version info
-
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
-    Application, ApplicationBuilder, CommandHandler, CallbackQueryHandler,
+    Application, CommandHandler, CallbackQueryHandler,
     ContextTypes
 )
-
 from datetime import datetime, date
 from panchang import fetch_panchang_data
 from horoscope import fetch_horoscope
@@ -15,7 +11,7 @@ from config import BOT_TOKEN
 
 logging.basicConfig(level=logging.INFO)
 
-# /start command
+# /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "🌟 Welcome to AstroBot!\n\n"
@@ -24,13 +20,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Use /birthdata ddmmyyyy or /marriage ddmmyyyy to view Panchang on special dates"
     )
 
-# /tithi command
+# /tithi
 async def tithi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     today = date.today().isoformat()
     result = fetch_panchang_data(today)
     await update.message.reply_text(f"📆 Today’s Panchang:\n{result}")
 
-# /birthdata and /marriage command
+# /birthdata and /marriage
 async def custom_panchang(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
         dob = context.args[0]
@@ -38,26 +34,18 @@ async def custom_panchang(update: Update, context: ContextTypes.DEFAULT_TYPE):
             dt = datetime.strptime(dob, "%d%m%Y").date()
             result = fetch_panchang_data(dt.isoformat())
             await update.message.reply_text(f"📆 Panchang for {dob}:\n{result}")
-        except Exception:
+        except:
             cmd = update.message.text.split()[0]
             await update.message.reply_text(
-                f"⚠️ *Invalid date format!*\n"
-                f"Use this format:\n\n"
-                f"`{cmd} 14022024`\n"
-                f"_That's DDMMYYYY (e.g., 14 Feb 2024)_",
-                parse_mode="Markdown"
+                f"⚠️ *Invalid date format!*\nUse:\n`{cmd} 14022024`", parse_mode="Markdown"
             )
     else:
         cmd = update.message.text.split()[0]
         await update.message.reply_text(
-            f"⚠️ *Date missing!*\n"
-            f"Use this format:\n\n"
-            f"`{cmd} 14022024`\n"
-            f"_That's DDMMYYYY (e.g., 14 Feb 2024)_",
-            parse_mode="Markdown"
+            f"⚠️ *Date missing!*\nUse:\n`{cmd} 14022024`", parse_mode="Markdown"
         )
 
-# /horoscope command with buttons
+# /horoscope
 async def horoscope(update: Update, context: ContextTypes.DEFAULT_TYPE):
     zodiac_buttons = [
         ["♈ Aries", "♉ Taurus", "♊ Gemini"],
@@ -72,7 +60,7 @@ async def horoscope(update: Update, context: ContextTypes.DEFAULT_TYPE):
     markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("🌟 Select your Zodiac Sign:", reply_markup=markup)
 
-# Handle zodiac button click
+# button click
 async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -80,7 +68,7 @@ async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE
     result = fetch_horoscope(sign)
     await query.edit_message_text(text=result, parse_mode="Markdown")
 
-# Run the bot
+# Main
 if __name__ == "__main__":
     app = Application.builder().token(BOT_TOKEN).build()
 
@@ -93,4 +81,3 @@ if __name__ == "__main__":
 
     print("🤖 Bot is running...")
     app.run_polling()
-
