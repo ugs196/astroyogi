@@ -60,6 +60,25 @@
   <br>
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=ugs196&theme=radical" alt="ugs196's GitHub Streak" />
 </p>
+<h2>🛡️ Supported Licenses</h2>
+<p>
+  <a href="https://opensource.org/licenses/Apache-2.0" target="_blank">
+    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="Apache License 2.0">
+  </a>
+  <a href="https://opensource.org/licenses/BSD-3-Clause" target="_blank">
+    <img src="https://img.shields.io/badge/License-BSD%203--Clause-blue.svg" alt="BSD 3-Clause License">
+  </a>
+  <a href="https://www.mozilla.org/en-US/MPL/2.0/" target="_blank">
+    <img src="https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg" alt="Mozilla Public License 2.0">
+  </a>
+  <a href="https://www.gnu.org/licenses/gpl-3.0" target="_blank">
+    <img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GNU GPL v3.0">
+  </a>
+  <a href="https://opensource.org/licenses/MIT" target="_blank">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License">
+  </a>
+</p>
+
 <h2>✨ Featured Projects</h2>
 <ul>
   <li>
