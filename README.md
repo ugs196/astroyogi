@@ -42,9 +42,19 @@
 
 <h2>📈 GitHub Stats</h2>
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=ugs196&show_icons=true&theme=radical" alt="ugs196's GitHub Stats" />
-  <br>
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=ugs196&theme=radical" alt="ugs196's GitHub Streak" />
+  <a href="https://github.com/ugs196" target="_blank" rel="noopener noreferrer">
+    <img src="https://github.com/ugs196.png" alt="ugs196 GitHub Profile" width="120" style="border-radius:50%;" />
+  </a>
+</p>
+<p align="center">
+  <a href="https://github.com/ugs196" target="_blank" rel="noopener noreferrer">
+    <img src="https://ghchart.rshah.org/ugs196" alt="ugs196's GitHub Contribution Chart" />
+  </a>
+</p>
+<p align="center">
+  <a href="https://github.com/ugs196" target="_blank" rel="noopener noreferrer" style="font-weight:bold; font-size:1.2em;">
+    View my GitHub Profile
+  </a>
 </p>
 
 <h2>✨ Featured Projects</h2>
