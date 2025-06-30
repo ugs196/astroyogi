@@ -1,18 +1,21 @@
 import logging
 import os
-from dotenv import load_dotenv
+from datetime import datetime, date
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
-    ApplicationBuilder, CommandHandler, CallbackQueryHandler,
-    ContextTypes
+    ApplicationBuilder,
+    CommandHandler,
+    CallbackQueryHandler,
+    ContextTypes,
 )
-from datetime import datetime, date
+
 from panchang import fetch_panchang_data
 from horoscope import fetch_horoscope
 
-# Load environment variables from .env
-load_dotenv()
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+# Load token and other secrets from environment
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+WEBHOOK_URL = os.environ.get("WEBHOOK_URL", "https://astroyogi.onrender.com")
+PORT = int(os.environ.get("PORT", 10000))
 
 logging.basicConfig(level=logging.INFO)
 
@@ -31,7 +34,7 @@ async def tithi(update: Update, context: ContextTypes.DEFAULT_TYPE):
     result = fetch_panchang_data(today)
     await update.message.reply_text(f"📆 Today’s Panchang:\n{result}")
 
-# /birthdata or /marriage command
+# /birthdata or /marriage
 async def custom_panchang(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
         dob = context.args[0]
@@ -58,7 +61,7 @@ async def custom_panchang(update: Update, context: ContextTypes.DEFAULT_TYPE):
             parse_mode="Markdown"
         )
 
-# /horoscope command
+# /horoscope with buttons
 async def horoscope(update: Update, context: ContextTypes.DEFAULT_TYPE):
     zodiac_buttons = [
         ["♈ Aries", "♉ Taurus", "♊ Gemini"],
@@ -73,7 +76,7 @@ async def horoscope(update: Update, context: ContextTypes.DEFAULT_TYPE):
     markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("🌟 Select your Zodiac Sign:", reply_markup=markup)
 
-# Handle zodiac button click
+# Callback for zodiac
 async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -81,7 +84,7 @@ async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE
     result = fetch_horoscope(sign)
     await query.edit_message_text(text=result, parse_mode="Markdown")
 
-# Entry point
+# Run webhook-based bot
 if __name__ == "__main__":
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
@@ -92,5 +95,9 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("horoscope", horoscope))
     app.add_handler(CallbackQueryHandler(handle_zodiac_click))
 
-    print("🤖 Bot is running...")
-    app.run_polling()
+    print("🤖 Bot is running via Webhook...")
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=PORT,
+        webhook_url=f"{WEBHOOK_URL}/webhook"
+    )
