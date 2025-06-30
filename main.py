@@ -79,14 +79,15 @@ async def handle_zodiac_click(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 # Run the bot
 if __name__ == "__main__":
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    application = Application.builder().token(BOT_TOKEN).build()
 
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("tithi", tithi))
-    app.add_handler(CommandHandler("birthdata", custom_panchang))
-    app.add_handler(CommandHandler("marriage", custom_panchang))
-    app.add_handler(CommandHandler("horoscope", horoscope))
-    app.add_handler(CallbackQueryHandler(handle_zodiac_click))
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("tithi", tithi))
+    application.add_handler(CommandHandler("birthdata", custom_panchang))
+    application.add_handler(CommandHandler("marriage", custom_panchang))
+    application.add_handler(CommandHandler("horoscope", horoscope))
+    application.add_handler(CallbackQueryHandler(handle_zodiac_click))
 
     print("🤖 Bot is running...")
-    app.run_polling()
+    application.run_polling()
+
